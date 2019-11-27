@@ -59,6 +59,7 @@ int LIS(vector<int> const & a){
 int main(){
     vector<int> a;
     int n;cin>>n;
+    a.resize(n);
     for(int x,i=0;i<n;i++)
         cin>>a[i];
 
