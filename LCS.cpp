@@ -88,6 +88,37 @@ set<string> getAllLCS(string s,string t,int n,int m){
     }
 }
 
+int LCSwithAtmostKchanges(int a[],int b[],int n,int m,int k){
+    int dp[k+1][n+1][m+1];
+    memset(dp,0,sizeof(dp));
+
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=m;j++){
+            if(a[i-1]==b[j-1]){
+                dp[0][i][j]=dp[0][i-1][j-1]+1;
+            }
+            else{
+                dp[0][i][j] = max(dp[0][i-1][j],dp[0][i][j-1]);
+            }
+        }
+    }
+
+    for(int i=1;i<=k;i++){
+        for(int j=1;j<=n;j++){
+            for(int l=1;l<=m;l++){
+                if(a[j-1]!=b[l-1]){
+                    dp[i][j][l] = max(dp[i-1][j-1][l-1]+1,max(dp[i-1][j][l-1],dp[i-1][j-1][l]));
+                }
+                else
+                    dp[i][j][l] = max(max(dp[i][j-1][l],dp[i][j][l-1]),dp[i][j-1][l-1]+1);
+            }
+        }
+    }
+
+    return dp[k][n][m];
+}
+
+
 int main(){
     memset(memo,-1,sizeof(memo));
     string s,t;
