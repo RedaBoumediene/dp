@@ -38,7 +38,33 @@ void solve2(){
     //    cout<<dp[i]<<' ';
     cout<< (dp[k]?"YES":"NO")<<endl;
 }
-
+void solve3(){
+    int dp[k+1];
+    memset(dp,0,sizeof(dp));
+    dp[0]=1;
+    for(int i=1;i<=n;i++){
+        int curr_ele = arr[i];
+        for(int j=k;j>=curr_ele;--j){
+            if(dp[j]!=0 || dp[j-curr_ele]==0)
+                continue;
+            else
+                dp[j] = curr_ele;
+        }
+    }
+    if(dp[k]==0)
+        cout<<-1<<endl;
+    else{
+        int curr = k;
+        while(curr>0){
+            cout<<dp[curr]<<" ";
+            curr-=dp[curr];
+        }
+        cout<<endl;
+    }
+    /*for(int i=0;i<=k;i++)
+        cout<<dp[i]<<" ";
+    cout<<endl;*/
+}
 int main(){
 
     cin>>n;
@@ -48,8 +74,9 @@ int main(){
     int t;cin>>t;
     while(t--){
         cin>>k;
-        solve2();
         //solve1();
+        //solve2();
+        solve3();
 
     }
 
