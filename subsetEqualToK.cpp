@@ -1,24 +1,16 @@
 #include<bits/stdc++.h>
 using namespace std;
-int n ,arr[1005];
 
-int main(){
+int n,k,arr[100];
 
-    cin>>n;
-    for(int i=1;i<=n;i++)
-        cin>>arr[i];
-
-    int k;
-    cin>>k;
+void solve1(){
     bool dp[n+1][k+1];
     memset(dp,false,sizeof(dp));
-
     for(int i=0;i<=n;i++)
         dp[i][0]=true;
-
     for(int i=1;i<=n;i++){
         for(int j=0;j<=k;j++){
-            if(arr[i]>j){
+            if(j<arr[i]){
                 dp[i][j]=dp[i-1][j];
             }
             else{
@@ -26,13 +18,39 @@ int main(){
             }
         }
     }
+    cout<< ((dp[n][k])?"YES":"NO") <<endl ;
+}
 
-    cout<<dp[n][k]<<endl;
+void solve2(){
+    bool dp[k+1];
+    memset(dp,0,sizeof(dp));
+    dp[0]=1;
+    for(int i=1;i<=n;i++){
+        int curr_ele = arr[i];
+        for(int j=k;j>=curr_ele;--j){
+            if(dp[j]||dp[j-arr[i]]==0)
+                continue;
+            else
+                dp[j] = 1;
+        }
+    }
+    //for(int i=0;i<=k;i++)
+    //    cout<<dp[i]<<' ';
+    cout<< (dp[k]?"YES":"NO")<<endl;
+}
 
-    /*for(int i=0;i<=n;i++){
-        for(int j=0;j<=k;j++)
-            cout<<dp[i][j]<<' ';
-        cout<<endl;
-    }*/
+int main(){
+
+    cin>>n;
+    for(int i=1;i<=n;i++)
+        cin>>arr[i];
+    cout<<"number of querys ? \n";
+    int t;cin>>t;
+    while(t--){
+        cin>>k;
+        solve2();
+        //solve1();
+
+    }
 
 return 0;}
